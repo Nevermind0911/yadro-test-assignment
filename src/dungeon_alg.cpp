@@ -35,8 +35,6 @@ void Simulator::collect(Resource r) {
   int idx = static_cast<int>(r);
   Room &room = rooms_[current_room_];
 
-  // тк первый сбор бесплатный, пробегаемся по всем рес-ам и проверяем, не было
-  // ли сбора, если нет -- сбор бесплатный
   bool first = true;
   for (int i = 0; i < 4; ++i)
     if (room.collected_[i]) {
@@ -47,7 +45,6 @@ void Simulator::collect(Resource r) {
   if (!first)
     food_--;
 
-  // в collected_[] добавляем для вывода
   collected_[idx] += room.res_[idx];
   room.res_[idx] = 0;
   room.collected_[idx] = true;
