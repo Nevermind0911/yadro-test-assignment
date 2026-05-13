@@ -7,7 +7,7 @@
 #include <queue>
 #include <vector>
 
-static const char *RESOURCE_NAMES[] = {"iron", "gold", "gems", "exp"};
+static const char *const RESOURCE_NAMES[] = {"iron", "gold", "gems", "exp"};
 
 static void write_state(std::ofstream &out, const Simulator &sim) {
   int cur = sim.get_current_room();
@@ -67,7 +67,7 @@ static std::vector<int> bfs_return_path(const Simulator &sim) {
 
 int main(int argc, char *argv[]) {
   if (argc < 2) {
-    std::cerr << "Err: No input file." << std::endl;
+    std::cerr << "Err: No input file." << "\n";
     return -1;
   }
 

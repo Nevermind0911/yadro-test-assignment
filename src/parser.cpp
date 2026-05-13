@@ -80,13 +80,13 @@ Simulator parse(const std::string &filename) {
 
   std::string line = read_line(file);
   auto tokens = split_space(line);
-  int N;
+  int N = 0;
   if (tokens.size() != 1 || !try_parse_int(tokens[0], N) || N < 1 || N > 255)
     report_error(line);
 
   struct RawRoom {
     std::vector<int> neighbors;
-    int res[4];
+    int res[4] = {};
     std::string line;
   };
   std::vector<RawRoom> raw(N + 1);
@@ -97,12 +97,12 @@ Simulator parse(const std::string &filename) {
     if (tokens.size() != 2 && tokens.size() != 6)
       report_error(line);
 
-    int id;
+    int id = 0;
     if (!try_parse_int(tokens[0], id) || id != expected)
       report_error(line);
 
     for (const auto &ns : split_comma(tokens[1])) {
-      int nid;
+      int nid = 0;
       if (!try_parse_int(ns, nid) || nid > N)
         report_error(line);
       raw[expected].neighbors.push_back(nid);
@@ -140,7 +140,7 @@ Simulator parse(const std::string &filename) {
 
   line = read_line(file);
   tokens = split_space(line);
-  int M;
+  int M = 0;
   if (tokens.size() != 2 || !try_parse_int(tokens[0], M) || M < 2 || M > 255)
     report_error(line);
   Resource target = parse_resource(tokens[1], line);

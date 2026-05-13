@@ -3,11 +3,10 @@
 static const int BASE_VALUE[4] = {7, 11, 23, 1};
 
 Room::Room(int id, std::vector<int> neighbors, const int res[4])
-    : id_(id), neighbors_(std::move(neighbors)), visited_(false) {
-  for (int i = 0; i < 4; ++i) {
+    : id_(id), neighbors_(std::move(neighbors)), res_{}, collected_{},
+      visited_(false) {
+  for (int i = 0; i < 4; ++i)
     res_[i] = res[i];
-    collected_[i] = false;
-  }
 }
 
 int Room::get_id() const { return id_; }
@@ -19,9 +18,8 @@ bool Room::is_collected(Resource r) const {
 bool Room::is_visited() const { return visited_; }
 
 Simulator::Simulator(std::vector<Room> rooms, int food, Resource target)
-    : rooms_(std::move(rooms)), current_room_(0), food_(food), target_(target) {
-  for (int i = 0; i < 4; ++i)
-    collected_[i] = 0;
+    : rooms_(std::move(rooms)), current_room_(0), food_(food), collected_{},
+      target_(target) {
   mark_visited(0);
 }
 

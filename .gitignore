@@ -13,5 +13,6 @@ compile_commands.json
 
 .vscode/
 .idea/
+.cache/
 *.swp
 .DS_Store
