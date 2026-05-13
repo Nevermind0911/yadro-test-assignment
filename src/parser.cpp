@@ -9,7 +9,9 @@
 // хелперы
 // падение на первой линии с ошибкой
 static void report_error(const std::string &line) {
-  std::cout << line << "\n";
+  std::ofstream out("result.txt");
+  out << line << "\n";
+  out.close();
   std::exit(1);
 }
 
@@ -17,7 +19,9 @@ static void report_error(const std::string &line) {
 static std::string read_line(std::ifstream &file) {
   std::string line;
   if (!std::getline(file, line)) {
-    std::cout << "\n";
+    std::ofstream out("result.txt");
+    out << "\n";
+    out.close();
     std::exit(1);
   }
   return line;
@@ -76,7 +80,9 @@ static Resource parse_resource(const std::string &s, const std::string &line) {
 Simulator parse(const std::string &filename) {
   std::ifstream file(filename);
   if (!file.is_open()) {
-    std::cout << filename << "\n";
+    std::ofstream out("result.txt");
+    out << filename << "\n";
+    out.close();
     std::exit(1);
   }
 

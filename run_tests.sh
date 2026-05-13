@@ -24,15 +24,8 @@ for input in "$TESTS_DIR"/*-input.txt; do
         continue
     fi
 
-    actual_stdout=$("$EXEC" "$input" 2>/dev/null)
-    exit_code=$?
-
-    if [ $exit_code -eq 0 ]; then
-        actual="$(cat result.txt)"
-    else
-        actual="$actual_stdout"
-    fi
-
+    "$EXEC" "$input" >/dev/null 2>&1
+    actual="$(cat result.txt)"
     expected_content="$(cat "$expected")"
 
     if [ "$actual" = "$expected_content" ]; then
