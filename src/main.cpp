@@ -9,7 +9,6 @@
 
 static const char *RESOURCE_NAMES[] = {"iron", "gold", "gems", "exp"};
 
-// хелпер для вывода состояния
 static void write_state(std::ofstream &out, const Simulator &sim) {
   int cur = sim.get_current_room();
   const Room &room = sim.get_room(cur);
@@ -24,7 +23,6 @@ static void write_state(std::ofstream &out, const Simulator &sim) {
   out << "\n";
 }
 
-// хелпер для сбора излишек на обратном пути
 static void collect_extras(std::ofstream &out, Simulator &sim, BotStrategy &bot,
                            int food_floor) {
   while (sim.get_food() > food_floor) {
@@ -38,7 +36,6 @@ static void collect_extras(std::ofstream &out, Simulator &sim, BotStrategy &bot,
   }
 }
 
-// поиск в глубину для возвращения
 static std::vector<int> bfs_return_path(const Simulator &sim) {
   int n = sim.num_rooms();
   std::vector<int> dist(n, -1);
@@ -78,7 +75,6 @@ int main(int argc, char *argv[]) {
   AliceBot bot;
   std::ofstream out("result.txt");
 
-  // исследование
   int exploration_budget = sim.get_food() / 2;
   for (int moves = 0; moves < exploration_budget; ++moves) {
     int next = bot.pick_next_room(sim);
@@ -97,12 +93,9 @@ int main(int argc, char *argv[]) {
     }
   }
 
-  // возвращение
   std::vector<int> path = bfs_return_path(sim);
   int steps_remaining = static_cast<int>(path.size());
 
-  // вынесено из цикла чтобы бот собрал ресурсы в первой комнате тк внутри цикла
-  // она пропускается => теряется часть ресурсов
   collect_extras(out, sim, bot, steps_remaining);
 
   for (int room_id : path) {
@@ -117,7 +110,6 @@ int main(int argc, char *argv[]) {
     collect_extras(out, sim, bot, steps_remaining);
   }
 
-  // вывод в файл
   int total = 0;
   out << "result";
   for (int i = 0; i < 4; ++i) {

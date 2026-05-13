@@ -16,10 +16,8 @@ private:
   friend class Simulator;
 
 public:
-  // конструктор
   Room(int id, std::vector<int> neighbors, const int res[4]);
 
-  // геттеры
   int get_id() const;
   const std::vector<int> &get_neighbors() const;
   int get_resource(Resource r) const;
@@ -38,14 +36,11 @@ private:
   void mark_visited(int id);
 
 public:
-  //конструктор 
   Simulator(std::vector<Room> rooms, int food, Resource target);
 
-  // функции класса
   void move_to(int room_id);
   void collect(Resource r);
 
-  // геттеры
   const Room &get_room(int id) const;
   int get_current_room() const;
   int get_food() const;

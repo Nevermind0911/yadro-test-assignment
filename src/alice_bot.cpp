@@ -31,8 +31,6 @@ Resource AliceBot::pick_resource(const Simulator &sim) {
   return best;
 }
 
-// поиск в глубину ч/з посещенные комнаты, помечаем непосещенные как кондидаты и
-// выбираем с наименьшим id
 int AliceBot::bfs_nearest_unvisited(const Simulator &sim) const {
   int start = sim.get_current_room();
   int n = sim.num_rooms();
@@ -75,7 +73,6 @@ int AliceBot::bfs_nearest_unvisited(const Simulator &sim) const {
   if (best_target == -1)
     return -1;
 
-  // откатываемся обратно до родителя
   int step = best_target;
   while (parent[step] != start)
     step = parent[step];

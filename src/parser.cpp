@@ -6,8 +6,6 @@
 #include <set>
 #include <sstream>
 
-// хелперы
-// падение на первой линии с ошибкой
 static void report_error(const std::string &line) {
   std::ofstream out("result.txt");
   out << line << "\n";
@@ -15,7 +13,6 @@ static void report_error(const std::string &line) {
   std::exit(1);
 }
 
-// чтение построчно
 static std::string read_line(std::ifstream &file) {
   std::string line;
   if (!std::getline(file, line)) {
@@ -27,7 +24,6 @@ static std::string read_line(std::ifstream &file) {
   return line;
 }
 
-// парсинг интов
 static bool try_parse_int(const std::string &s, int &out) {
   if (s.empty())
     return false;
@@ -42,7 +38,6 @@ static bool try_parse_int(const std::string &s, int &out) {
   }
 }
 
-// разделение по пробелу
 static std::vector<std::string> split_space(const std::string &s) {
   std::vector<std::string> result;
   std::istringstream iss(s);
@@ -52,7 +47,6 @@ static std::vector<std::string> split_space(const std::string &s) {
   return result;
 }
 
-// разделение по запятой для комнат
 static std::vector<std::string> split_comma(const std::string &s) {
   std::vector<std::string> result;
   std::istringstream iss(s);
@@ -62,7 +56,6 @@ static std::vector<std::string> split_comma(const std::string &s) {
   return result;
 }
 
-// парсинг ресурсов для дальнейшей работы с ними
 static Resource parse_resource(const std::string &s, const std::string &line) {
   if (s == "iron")
     return Resource::IRON;
@@ -76,7 +69,6 @@ static Resource parse_resource(const std::string &s, const std::string &line) {
   return Resource::IRON;
 }
 
-// сам парсер
 Simulator parse(const std::string &filename) {
   std::ifstream file(filename);
   if (!file.is_open()) {
@@ -102,8 +94,6 @@ Simulator parse(const std::string &filename) {
   for (int expected = 0; expected <= N; ++expected) {
     line = read_line(file);
     tokens = split_space(line);
-    // 2 токена = id + соседи (случай строки, в которой не указаны ресурсы)
-    // 6 токенов = id + соседи + 4 ресурса
     if (tokens.size() != 2 && tokens.size() != 6)
       report_error(line);
 
@@ -131,7 +121,6 @@ Simulator parse(const std::string &filename) {
     raw[expected].line = line;
   }
 
-  // явная двунаправленность графов (в обновленном за день тз сказали, что надо так ^_^)
   std::vector<std::set<int>> adj(N + 1);
   for (int i = 0; i <= N; ++i)
     for (int j : raw[i].neighbors)
