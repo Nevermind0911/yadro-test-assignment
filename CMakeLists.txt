@@ -3,15 +3,27 @@ project(dungeon_bot)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-add_executable(dungeon_bot
+set(SOURCES
     src/main.cpp
     src/dungeon_alg.cpp
     src/parser.cpp
     src/alice_bot.cpp
 )
 
+add_executable(dungeon_bot ${SOURCES})
 target_include_directories(dungeon_bot PRIVATE include)
+
+find_program(CLANG_TIDY_EXE NAMES clang-tidy)
+if(CLANG_TIDY_EXE)
+    add_custom_target(tidy
+        COMMAND ${CLANG_TIDY_EXE} -p ${CMAKE_BINARY_DIR} ${SOURCES}
+        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+        COMMENT "Running clang-tidy"
+        VERBATIM
+    )
+endif()
 
 enable_testing()
 
