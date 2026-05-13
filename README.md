@@ -39,14 +39,27 @@ ctest --output-on-failure
 
 CTest автоматически регистрирует каждую пару `*-input.txt` / `*-output.txt` как отдельный тест. Прогон работает через скрипт `cmake/run_test.cmake`: запускается `dungeon_bot` с входным файлом, потом содержимое `result.txt` сравнивается с ожидаемым. При расхождении CTest показывает diff.
 
+## Линтинг
+
+Конфиг для clang-tidy лежит в `.clang-tidy` в корне. Включены `bugprone`, `cert`, `clang-analyzer`, `cppcoreguidelines`, `modernize`, `performance`, `portability`, `readability` 
+
+Запуск (требует установленный clang-tidy):
+
+```bash
+cmake --build build --target tidy
+```
+
+Кастомный таргет `tidy` регистрируется в CMakeLists.txt только если clang-tidy найден в PATH.
+
 ## Структура проекта
 
 ```
 include/
 src/
 tests/
-cmake/         CMake-скрипт для CTest
+cmake/           CMake-скрипт для CTest
 CMakeLists.txt
+.clang-tidy      конфиг линтера
 ```
 
 Алгоритм бота отделён через интерфейс `BotStrategy` — можно подменить реализацию (`AliceBot`) на любую другую, не меняя симулятор.
