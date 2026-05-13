@@ -1,0 +1,17 @@
+build/
+result.txt
+
+*.o
+*.obj
+*.out
+
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+compile_commands.json
+
+.vscode/
+.idea/
+*.swp
+.DS_Store

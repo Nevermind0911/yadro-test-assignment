@@ -1,0 +1,12 @@
+go 1
+state 1 1 0 0 100
+collect exp
+state 1 1 0 0 _
+go 2
+state 2 0 0 0 50
+collect exp
+state 2 0 0 0 _
+go 1
+state 1 1 0 0 _
+go 0
+result 0 0 0 150 300
